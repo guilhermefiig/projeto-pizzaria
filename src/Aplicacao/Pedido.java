@@ -1,4 +1,4 @@
-package controlePedidos;
+package Aplicacao;
 
 public class Pedido {
 }
