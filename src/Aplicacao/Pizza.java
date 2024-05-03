@@ -9,8 +9,15 @@ import java.sql.SQLException;
 public class Pizza {
     private String sabor;
     private double valor;
+    private int matriculaFunc;
 
-    public static void addPizza(String sabor, double valor, int matriculaFunc){
+    public Pizza(String sabor, double valor, int matriculaFunc) {
+        this.sabor = sabor;
+        this.valor = valor;
+        this.matriculaFunc = matriculaFunc;
+    }
+
+    public void addPizza(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 

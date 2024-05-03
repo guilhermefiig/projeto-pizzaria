@@ -7,8 +7,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PedidoPizza {
+    private int idPedido;
+    private int idPizza;
+    private int quantidade;
 
-    public static void addPedidoPizza(int idPedido, int idPizza, int quantidade){
+    public PedidoPizza(int idPedido, int idPizza, int quantidade) {
+        this.idPedido = idPedido;
+        this.idPizza = idPizza;
+        this.quantidade = quantidade;
+    }
+
+    public void addPedidoPizza(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 

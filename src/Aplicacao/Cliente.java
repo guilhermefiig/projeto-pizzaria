@@ -9,7 +9,11 @@ import java.sql.SQLException;
 public class Cliente {
     private String nome;
 
-    public static void addCliente(String nome){
+    public Cliente(String nome) {
+        this.nome = nome;
+    }
+
+    public void addCliente(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 

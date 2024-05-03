@@ -7,8 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Pedido {
+    private int idCliente;
 
-    public static void addpPedido(int idCliente){
+    public Pedido(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public void addPedido(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 

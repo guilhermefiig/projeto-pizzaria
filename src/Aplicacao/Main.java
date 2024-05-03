@@ -1,21 +1,39 @@
 package Aplicacao;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-//        Funcionario.addFuncionario("Guilherme Figueiêdo");
 
-//        Cliente.addCliente("Rayza Cardoso Menezes");
-//
-//        Pedido.addpPedido(2);
-//
-//        Pizza.addPizza("Pizza de Calabresa", 50.0, 2);
-//
-//        PedidoPizza.addPedidoPizza(2, 2, 2);
-//
-//        Conta.criarConta(2, 100.0);
+//        Funcionario funcionario = new Funcionario("Arthur Figueirêdo");
+//        funcionario.addFuncionario();
+//     --------------------------------------------------------------
 
-//        Conta.pagarConta(2, 2);
+//        Cliente cliente = new Cliente("Guilherme Figueirêdo");
+//        cliente.addCliente();
+//     --------------------------------------------------------------
 
-//        Conta.imprimirConta(2, 2);
+//        Pedido pedido = new Pedido(3);
+//        pedido.addPedido();
+////     --------------------------------------------------------------
+//
+//
+//        Pizza pizza = new Pizza("Camarão com Cream Cheese", 65.0, 3);
+//        pizza.addPizza();
+////     --------------------------------------------------------------
+//
+//
+//        PedidoPizza pedidoPizza = new PedidoPizza(5, 3, 1);
+//        pedidoPizza.addPedidoPizza();
+////     --------------------------------------------------------------
+//
+//        Conta criarConta = new Conta(5, 65.0);
+//        criarConta.criarConta();
+//
+//        Conta pagarConta = new Conta(3, 4);
+//        pagarConta.pagarConta();
+//
+        Conta imprimirConta = new Conta(3, 4, 0);
+        imprimirConta.imprimirConta();
     }
 }

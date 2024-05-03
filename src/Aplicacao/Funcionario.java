@@ -8,9 +8,12 @@ import java.sql.SQLException;
 
 public class Funcionario {
     private String nome;
-    private String matricula;
 
-    public static void addFuncionario(String nome){
+    public Funcionario(String nome) {
+        this.nome = nome;
+    }
+
+    public void addFuncionario(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 

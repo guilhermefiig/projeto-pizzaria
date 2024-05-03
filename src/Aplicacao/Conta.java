@@ -2,10 +2,7 @@ package Aplicacao;
 
 import db.DB;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Date;
+import java.sql.*;
 
 //????????????????????????????????????????????
 //????????????????????????????????????????????
@@ -26,9 +23,31 @@ import java.util.Date;
 
 
 public class Conta {
-    private Date data;
 
-    public static void criarConta(int idPedido, double valor){
+    private int idPedido;
+    private double valor;
+
+    private int idCliente;
+    private int idConta;
+
+    private int matricula;
+
+    public Conta(int idPedido, double valor) {
+        this.idPedido = idPedido;
+        this.valor = valor;
+    }
+
+    public Conta (int idCliente, int idConta){
+        this.idCliente = idCliente;
+        this.idConta = idConta;
+    }
+
+    public Conta (int matricula, int idConta, int nada){
+        this.matricula = matricula;
+        this.idConta = idConta;
+    }
+
+    public void criarConta(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -38,7 +57,7 @@ public class Conta {
                     "INSERT INTO conta (ID_Pedido, Valor) VALUES (?, ?)");
 
             preparedStatement.setInt(1, idPedido);
-            preparedStatement.setDouble(1, valor);
+            preparedStatement.setDouble(2, valor);
 
             preparedStatement.executeUpdate();
 
@@ -56,7 +75,7 @@ public class Conta {
         }
     }
 
-    public static void pagarConta(int idCliente, int id){
+    public void pagarConta(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -66,7 +85,7 @@ public class Conta {
                     "UPDATE conta SET ID_Cliente = ?, Status = 'Pago' WHERE ID = ?");
 
             preparedStatement.setInt(1, idCliente);
-            preparedStatement.setInt(2, id);
+            preparedStatement.setInt(2, idConta);
 
             preparedStatement.executeUpdate();
 
@@ -84,9 +103,12 @@ public class Conta {
         }
     }
 
-    public static void imprimirConta(int matricula, int id){
+    public void imprimirConta(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+
+        ResultSet resultSet = null;
+        Statement statement = null;
 
         try {
             connection = DB.getConnection();
@@ -94,9 +116,19 @@ public class Conta {
                     "UPDATE conta SET Matricula_Funcionario = ?, Status_Impressao = 'Impresso' WHERE ID = ?");
 
             preparedStatement.setInt(1, matricula);
-            preparedStatement.setInt(2, id);
-
+            preparedStatement.setInt(2, idConta);
             preparedStatement.executeUpdate();
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM conta WHERE ID = ?");
+
+            preparedStatement.setInt(1, idConta);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                System.out.println(resultSet.getInt("ID") + ", " + resultSet.getDouble("Valor")
+                        + ", "+ resultSet.getString("Status") + ", " + resultSet.getString("Status_Impressao"));
+            }
 
 
         } catch (SQLException e) {
