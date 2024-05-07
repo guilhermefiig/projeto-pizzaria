@@ -1,6 +1,5 @@
 package Aplicacao;
 
-import db.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,12 +16,10 @@ public class Pizza {
         this.matriculaFunc = matriculaFunc;
     }
 
-    public void addPizza(){
-        Connection connection = null;
+    public void addPizza(Connection connection){
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = DB.getConnection();
             preparedStatement = connection.prepareStatement(
                     "INSERT INTO pizza (Sabor ,Valor, Matricula_Funcionario) VALUES (?, ?, ?)");
 
@@ -35,13 +32,9 @@ public class Pizza {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-//            try {
-//                preparedStatement.close();
-//                connection.close();
-//            }catch (SQLException e){
-//                e.printStackTrace();
-//            }
-        }
+    }
+
+    public void apagarPizza(){
+
     }
 }

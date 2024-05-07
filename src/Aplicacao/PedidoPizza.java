@@ -1,6 +1,5 @@
 package Aplicacao;
 
-import db.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,12 +16,10 @@ public class PedidoPizza {
         this.quantidade = quantidade;
     }
 
-    public void addPedidoPizza(){
-        Connection connection = null;
+    public void addPedidoPizza(Connection connection){
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = DB.getConnection();
             preparedStatement = connection.prepareStatement(
                     "INSERT INTO pedidopizza (ID_Pedido, ID_Pizza, quantidade_pizza) VALUES (?, ?, ?)");
 
@@ -34,14 +31,6 @@ public class PedidoPizza {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-//            try {
-//                preparedStatement.close();
-//                connection.close();
-//            }catch (SQLException e){
-//                e.printStackTrace();
-//            }
         }
     }
 }

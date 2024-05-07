@@ -1,6 +1,5 @@
 package Aplicacao;
 
-import db.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +12,10 @@ public class Funcionario {
         this.nome = nome;
     }
 
-    public void addFuncionario(){
-        Connection connection = null;
+    public void addFuncionario(Connection connection){
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = DB.getConnection();
             preparedStatement = connection.prepareStatement(
                     "INSERT INTO funcionario (Nome) VALUES (?)");
 
@@ -29,14 +26,6 @@ public class Funcionario {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-//            try {
-//                preparedStatement.close();
-//                connection.close();
-//            }catch (SQLException e){
-//                e.printStackTrace();
-//            }
         }
     }
 }

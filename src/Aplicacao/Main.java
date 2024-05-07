@@ -1,16 +1,20 @@
 package Aplicacao;
 
-import java.util.Scanner;
+import db.DB;
+
+import java.sql.Connection;
 
 public class Main {
     public static void main(String[] args) {
+
+        Connection connection = DB.getConnection();
 
 //        Funcionario funcionario = new Funcionario("Arthur Figueirêdo");
 //        funcionario.addFuncionario();
 //     --------------------------------------------------------------
 
-//        Cliente cliente = new Cliente("Guilherme Figueirêdo");
-//        cliente.addCliente();
+//        Cliente cliente = new Cliente("José Vitor");
+//        cliente.addCliente(connection);
 //     --------------------------------------------------------------
 
 //        Pedido pedido = new Pedido(3);
@@ -27,13 +31,13 @@ public class Main {
 //        pedidoPizza.addPedidoPizza();
 ////     --------------------------------------------------------------
 //
-//        Conta criarConta = new Conta(5, 65.0);
+//        Conta criarConta = new Conta(3, 70.0);
 //        criarConta.criarConta();
 //
-//        Conta pagarConta = new Conta(3, 4);
+//        Conta pagarConta = new Conta(3, 5);
 //        pagarConta.pagarConta();
-//
-        Conta imprimirConta = new Conta(3, 4, 0);
-        imprimirConta.imprimirConta();
+
+        Conta imprimirConta = new Conta(3, 5, 0);
+        imprimirConta.imprimirConta(connection);
     }
 }

@@ -1,6 +1,5 @@
 package Aplicacao;
 
-import db.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +12,10 @@ public class Pedido {
         this.idCliente = idCliente;
     }
 
-    public void addPedido(){
-        Connection connection = null;
+    public void addPedido(Connection connection){
         PreparedStatement preparedStatement = null;
 
         try {
-            connection = DB.getConnection();
             preparedStatement = connection.prepareStatement(
                     "INSERT INTO pedido (ID_Cliente) VALUES (?)");
 
@@ -28,14 +25,6 @@ public class Pedido {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-//            try {
-//                preparedStatement.close();
-//                connection.close();
-//            }catch (SQLException e){
-//                e.printStackTrace();
-//            }
         }
     }
 }
