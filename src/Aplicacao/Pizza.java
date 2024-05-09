@@ -1,11 +1,10 @@
 package Aplicacao;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Pizza {
+    private int idPizza;
     private String sabor;
     private double valor;
     private int matriculaFunc;
@@ -14,6 +13,13 @@ public class Pizza {
         this.sabor = sabor;
         this.valor = valor;
         this.matriculaFunc = matriculaFunc;
+    }
+
+    public Pizza() {
+    }
+
+    public Pizza(int idPizza) {
+        this.idPizza = idPizza;
     }
 
     public void addPizza(Connection connection){
@@ -34,7 +40,39 @@ public class Pizza {
         }
     }
 
-    public void apagarPizza(){
+    public void mostrarPizzas(Connection connection){
+        ResultSet resultSet = null;
+        Statement statement = null;
 
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT ID, Sabor, valor, funcionario.nome AS Funcionario " +
+                    "FROM pizza, funcionario " +
+                    "WHERE pizza.Matricula_Funcionario = funcionario.Matricula");
+
+            while (resultSet.next()){
+                System.out.println("    ID: " + resultSet.getInt("ID") + " | " + "Sabor: " + resultSet.getString("Sabor") +
+                        " | " + "Valor: " + resultSet.getDouble("Valor") + " | " +
+                    "Funcionário que cadastrou: " + resultSet.getString("Funcionario"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletarPizza(Connection connection){
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(
+                    "DELETE FROM pizza WHERE ID = ?");
+
+            preparedStatement.setInt(1, idPizza);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

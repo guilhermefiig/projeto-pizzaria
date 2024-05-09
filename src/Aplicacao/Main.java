@@ -12,6 +12,8 @@ public class Main {
 
         Cliente cliente;
         Funcionario funcionario;
+        Conta conta;
+        Pizza pizza;
 
         Connection connection = DB.getConnection();
 
@@ -29,12 +31,13 @@ public class Main {
                     [6]: Deletar um funcionário
                     -----------------------------------
                     [7] Cadastrar uma pizza
-                    [8] Deletar uma pizza
+                    [8] Mostrar lista de pizzas
+                    [9] Deletar uma pizza
                     -----------------------------------
-                    [9] Abrir uma conta
-                    [10] Pagar uma conta
-                    [11] Imprimir uma conta
-                    [12] Sair
+                    [10] Abrir uma conta
+                    [11] Pagar uma conta
+                    [12] Imprimir uma conta
+                    [13] Sair
                     >""");
             int resposta = input.nextInt();
 
@@ -53,6 +56,7 @@ public class Main {
                     System.out.printf("\nCliente '%s' cadastrado com sucesso!\n", nomeCliente);
 
                     break;
+
                 case 2:
                     System.out.println("Opção selecionada: Ver lista de clientes\n");
 
@@ -62,6 +66,7 @@ public class Main {
                     cliente.mostrarClientes(connection);
 
                     break;
+
                 case 3:
                     System.out.println("Opção selecionada: Deletar um cliente\n");
 
@@ -74,6 +79,7 @@ public class Main {
                     System.out.printf("\nCliente com ID = '%d' deletado com sucesso!\n", idClienteDeletar);
 
                     break;
+
                 case 4:
                     System.out.println("Opção selecionada: Cadastrar um funcionário\n");
 
@@ -86,6 +92,7 @@ public class Main {
                     System.out.printf("\nFuncionári(o/a) '%s' cadastrado com sucesso!\n", nomeFuncionario);
 
                     break;
+
                 case 5:
                     System.out.println("Opção selecionada: Ver lista de funcionários\n");
 
@@ -95,6 +102,7 @@ public class Main {
                     funcionario.mostrarFuncionarios(connection);
 
                     break;
+
                 case 6:
                     System.out.println("Opção selecionada: Deletar um funcionário\n");
 
@@ -107,25 +115,81 @@ public class Main {
                     System.out.printf("\nFuncionario com matricula = '%d' deletado com sucesso!\n", matriculaFuncionarioDeletar);
 
                     break;
+
                 case 7:
                     System.out.println("Opção selecionada: Cadastrar uma pizza\n");
+
+                    System.out.print("Digite o sabor da pizza: ");
+                    String saborPizza = input.nextLine();
+
+                    System.out.print("Digite o valor da pizza: ");
+                    double valorPizza = input.nextDouble();
+
+                    System.out.print("Digite o ID do funcionário que cadastrou a pizza: ");
+                    int idFuncionarioCadastroPizza = input.nextInt();
+
+                    pizza = new Pizza(saborPizza,valorPizza, idFuncionarioCadastroPizza);
+                    pizza.addPizza(connection);
+
+                    System.out.printf("\nPizza com sabor '%s' cadastrada com sucesso!\n", saborPizza);
+
                     break;
+
                 case 8:
-                    System.out.println("Opção selecionada: Deletar uma pizza\n");
+                    System.out.println("Opção selecionada: Mostrar lista de pizzas\n");
+
+                    System.out.println("---Lista de pizzas:---");
+
+                    pizza = new Pizza();
+                    pizza.mostrarPizzas(connection);
+
                     break;
+
                 case 9:
+                    System.out.println("Opção selecionada: Deletar uma pizza\n");
+
+                    System.out.print("Digite o ID da pizza que você deseja deletar: ");
+                    int idPizzaDeletar = input.nextInt();
+
+                    pizza = new Pizza(idPizzaDeletar);
+                    pizza.deletarPizza(connection);
+
+                    System.out.printf("\nPizza com ID = '%d' deletada com sucesso!\n", idPizzaDeletar);
+
+                    break;
+
+                case 10:
                     System.out.println("Opção selecionada: Abrir uma conta\n");
                     break;
-                case 10:
+
+                case 11:
                     System.out.println("Opção selecionada: Pagar uma conta\n");
                     break;
-                case 11:
-                    System.out.println("Opção selecionada: Imprimir uma conta\n");
-                    break;
+
                 case 12:
+                    System.out.println("Opção selecionada: Imprimir uma conta\n");
+
+                    System.out.print("Digite a matricula do funcionário que vai imprimir: ");
+                    int matriculaFuncionarioImprimir = input.nextInt();
+
+                    System.out.print("Digite o ID da conta que deseja imprimir: ");
+                    int idConta = input.nextInt();
+
+                    conta = new Conta(matriculaFuncionarioImprimir, idConta, 0);
+
+                    System.out.print("\n--------------------------------------------------\n");
+                    conta.imprimirConta(connection);
+                    System.out.print("\n--------------------------------------------------\n");
+
+                    System.out.println("\nConta impressa com sucesso!");
+
+                    break;
+
+                case 13:
                     System.out.println("Saindo!");
                     System.exit(0);
                     break;
+
                 default:
                     System.out.println("Opção inválida!\n");
             }
