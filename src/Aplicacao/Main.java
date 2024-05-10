@@ -14,6 +14,8 @@ public class Main {
         Funcionario funcionario;
         Conta conta;
         Pizza pizza;
+        Pedido pedido;
+        PedidoPizza pedidoPizza;
 
         Connection connection = DB.getConnection();
 
@@ -34,10 +36,12 @@ public class Main {
                     [8] Mostrar lista de pizzas
                     [9] Deletar uma pizza
                     -----------------------------------
-                    [10] Abrir uma conta
-                    [11] Pagar uma conta
-                    [12] Imprimir uma conta
-                    [13] Sair
+                    [10] Pedir uma pizza
+                    -----------------------------------
+                    [11] Abrir uma conta
+                    [12] Pagar uma conta
+                    [13] Imprimir uma conta
+                    [14] Sair
                     >""");
             int resposta = input.nextInt();
 
@@ -159,14 +163,52 @@ public class Main {
                     break;
 
                 case 10:
-                    System.out.println("Opção selecionada: Abrir uma conta\n");
+                    System.out.println("Opção selecionada: Pedir uma pizza\n");
+
+                    System.out.print("Você ja abriu uma conta [s]im [n]ão: ");
+                    String respostaPedido = input.next();
+
+                    switch (respostaPedido){
+                        case "n":
+                            System.out.println("Abrir conta: ");
+
+                            System.out.println("Digite o ID do cliente que deseja abrir a conta: ");
+                            int idClienteAbrirConta = input.nextInt();
+
+                            pedido = new Pedido(idClienteAbrirConta);
+                            pedido.addPedido(connection);
+
+                            System.out.println("Pedido aberto!");
+
+                            break;
+
+                        case "s":
+                            System.out.println("Pedir uma pizza: ");
+
+                            System.out.print("Digite o ID do pedido no qual deseja pedir a pizza: ");
+                            int idPedidoPedirPizza = input.nextInt();
+
+                            System.out.print("Digite o ID da pizza que deseja pedir: ");
+                            int idPizzaPedido = input.nextInt();
+
+                            System.out.println("Digite a quantas pizzas desse sabor você deseja pedir: ");
+                            int quantidadePizza = input.nextInt();
+
+                            pedidoPizza = new PedidoPizza(idPedidoPedirPizza, idPizzaPedido, quantidadePizza);
+                            pedidoPizza.addPedidoPizza(connection);
+                    }
+
                     break;
 
                 case 11:
-                    System.out.println("Opção selecionada: Pagar uma conta\n");
+                    System.out.println("Opção selecionada: Abrir uma conta\n");
                     break;
 
                 case 12:
+                    System.out.println("Opção selecionada: Pagar uma conta\n");
+                    break;
+
+                case 13:
                     System.out.println("Opção selecionada: Imprimir uma conta\n");
 
                     System.out.print("Digite a matricula do funcionário que vai imprimir: ");
@@ -185,7 +227,7 @@ public class Main {
 
                     break;
 
-                case 13:
+                case 14:
                     System.out.println("Saindo!");
                     System.exit(0);
                     break;

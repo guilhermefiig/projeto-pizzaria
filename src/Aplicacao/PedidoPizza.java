@@ -1,9 +1,7 @@
 package Aplicacao;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class PedidoPizza {
     private int idPedido;
@@ -29,6 +27,34 @@ public class PedidoPizza {
 
             preparedStatement.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void valorPizzas(Connection connection){
+        ResultSet resultSet = null;
+        Statement statement = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT Pizza.Valor AS valor_pizza\n" +
+                            "FROM PedidoPizza\n" +
+                            "INNER JOIN Pizza ON PedidoPizza.ID_Pizza = Pizza.ID\n" +
+                            "WHERE ID_Pedido = ? and PedidoPizza.ID_Pizza IN (\n" +
+                            "    SELECT ID_Pizza\n" +
+                            "    FROM PedidoPizza\n" +
+                            "    WHERE Valor = (SELECT Valor FROM Pizza WHERE ID = PedidoPizza.ID_Pizza)\n" +
+                            ");"
+            );
+
+            preparedStatement.setInt(1, 1);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                System.out.println("");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
