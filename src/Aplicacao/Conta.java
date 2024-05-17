@@ -33,16 +33,23 @@ public class Conta {
 
     public void criarConta(Connection connection){
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
             preparedStatement = connection.prepareStatement(
-                    "INSERT INTO conta (ID_Pedido, Valor) VALUES (?, ?)");
+                    "INSERT INTO conta (ID_Pedido, Valor) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setInt(1, idPedido);
             preparedStatement.setDouble(2, valor);
 
             preparedStatement.executeUpdate();
 
+            resultSet = preparedStatement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                int idPedidoGerado = resultSet.getInt(1);
+                System.out.println("\nID da conta: " + idPedidoGerado);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,6 +58,7 @@ public class Conta {
 
     public void pagarConta(Connection connection){
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
             preparedStatement = connection.prepareStatement(
@@ -61,7 +69,6 @@ public class Conta {
 
             preparedStatement.executeUpdate();
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,9 +76,7 @@ public class Conta {
 
     public void imprimirConta(Connection connection){
         PreparedStatement preparedStatement = null;
-
         ResultSet resultSet = null;
-        Statement statement = null;
 
         try {
             preparedStatement = connection.prepareStatement(
@@ -81,21 +86,17 @@ public class Conta {
             preparedStatement.setInt(2, idConta);
             preparedStatement.executeUpdate();
 
-            preparedStatement = connection.prepareStatement("SELECT conta.ID, Data_Conta, Valor, " +
-                    "cliente.Nome AS Cliente, funcionario.Nome AS Funcionario, Status, Status_Impressao " +
-                    "FROM conta, cliente, funcionario " +
-                    "WHERE conta.ID = ? AND conta.Matricula_Funcionario = funcionario.Matricula AND conta.ID_Cliente = cliente.ID");
 
+            preparedStatement = connection.prepareStatement("SELECT * from conta WHERE ID = ?;");
             preparedStatement.setInt(1, idConta);
-
             resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 System.out.println("\n   ID: " + resultSet.getInt("ID") +
                         "\n   Data: " + resultSet.getDate("Data_Conta") +
                         "\n   Valor: " + resultSet.getDouble("Valor") +
-                        "\n   Cliente: " + resultSet.getString("Cliente") +
-                        "\n   Impressão feita pelo funcionário: " + resultSet.getString("Funcionario") +
+                        "\n   Cliente: " + resultSet.getString("ID_Cliente") +
+                        "\n   Impressão feita pelo funcionário: " + resultSet.getString("Matricula_Funcionario") +
                         "\n   Status: " + resultSet.getString("Status") +
                         "\n   Status da impressão: " + resultSet.getString("Status_Impressao"));
             }

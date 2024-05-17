@@ -31,32 +31,16 @@ public class PedidoPizza {
             e.printStackTrace();
         }
     }
-
-    public void valorPizzas(Connection connection){
-        ResultSet resultSet = null;
-        Statement statement = null;
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT Pizza.Valor AS valor_pizza\n" +
-                            "FROM PedidoPizza\n" +
-                            "INNER JOIN Pizza ON PedidoPizza.ID_Pizza = Pizza.ID\n" +
-                            "WHERE ID_Pedido = ? and PedidoPizza.ID_Pizza IN (\n" +
-                            "    SELECT ID_Pizza\n" +
-                            "    FROM PedidoPizza\n" +
-                            "    WHERE Valor = (SELECT Valor FROM Pizza WHERE ID = PedidoPizza.ID_Pizza)\n" +
-                            ");"
-            );
-
-            preparedStatement.setInt(1, 1);
-
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()){
-                System.out.println("");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
+
+
+
+
+//SELECT Pizza.Valor AS valor_pizza
+//FROM PedidoPizza
+//INNER JOIN Pizza ON PedidoPizza.ID_Pizza = Pizza.ID
+//WHERE ID_Pedido = 2 and PedidoPizza.ID_Pizza IN (
+//        SELECT ID_Pizza
+//    FROM PedidoPizza
+//            WHERE Valor = (SELECT Valor FROM Pizza WHERE ID = PedidoPizza.ID_Pizza)
+//);

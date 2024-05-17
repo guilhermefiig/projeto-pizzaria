@@ -53,7 +53,7 @@ public class Pizza {
             while (resultSet.next()){
                 System.out.println("    ID: " + resultSet.getInt("ID") + " | " + "Sabor: " + resultSet.getString("Sabor") +
                         " | " + "Valor: " + resultSet.getDouble("Valor") + " | " +
-                    "Funcionário que cadastrou: " + resultSet.getString("Funcionario"));
+                        "Funcionário que cadastrou: " + resultSet.getString("Funcionario"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,4 +75,30 @@ public class Pizza {
             e.printStackTrace();
         }
     }
+
+    public double valorPizzas(Connection connection) {
+        double valor = 0.0;
+        ResultSet resultSet = null;
+        Statement statement = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select Valor from pizza where ID = ?"
+            );
+
+            preparedStatement.setInt(1, idPizza);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                valor = resultSet.getDouble("Valor");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return valor;
+    }
 }
+
+
