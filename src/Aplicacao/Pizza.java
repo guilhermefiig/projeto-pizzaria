@@ -1,6 +1,5 @@
 package Aplicacao;
 
-
 import java.sql.*;
 
 public class Pizza {
@@ -46,15 +45,24 @@ public class Pizza {
 
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT ID, Sabor, valor, funcionario.nome AS Funcionario " +
-                    "FROM pizza, funcionario " +
-                    "WHERE pizza.Matricula_Funcionario = funcionario.Matricula");
+            resultSet = statement.executeQuery("SELECT pizza.ID, pizza.Sabor, pizza.Valor, funcionario.nome AS Funcionario " +
+                    "FROM pizza " +
+                    "LEFT JOIN funcionario ON pizza.Matricula_Funcionario = funcionario.Matricula");
 
-            while (resultSet.next()){
-                System.out.println("    ID: " + resultSet.getInt("ID") + " | " + "Sabor: " + resultSet.getString("Sabor") +
-                        " | " + "Valor: " + resultSet.getDouble("Valor") + " | " +
-                        "Funcionário que cadastrou: " + resultSet.getString("Funcionario"));
+            while (resultSet.next()) {
+                String funcionario = resultSet.getString("Funcionario");
+                System.out.print("    ID: " + resultSet.getInt("ID") + " | " +
+                        "Sabor: " + resultSet.getString("Sabor") + " | " +
+                        "Valor: " + resultSet.getDouble("Valor") + " | " +
+                        "Funcionário que cadastrou: ");
+                if (funcionario != null) {
+                    System.out.println(funcionario);
+                } else {
+                    System.out.println("Apagado");
+                }
             }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

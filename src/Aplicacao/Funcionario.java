@@ -1,6 +1,5 @@
 package Aplicacao;
 
-
 import java.sql.*;
 
 public class Funcionario {

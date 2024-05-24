@@ -1,6 +1,5 @@
 package Aplicacao;
 
-
 import db.DB;
 
 import java.sql.*;

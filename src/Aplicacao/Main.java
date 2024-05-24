@@ -33,7 +33,7 @@ public class Main {
                     [6]: Deletar um funcionário
                     -----------------------------------
                     [7] Cadastrar uma pizza
-                    [8] Mostrar lista de pizzas
+                    [8] Ver lista de pizzas
                     [9] Deletar uma pizza
                     -----------------------------------
                     [10] Pedir uma pizza
@@ -245,7 +245,7 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("Opção inválida!\n");
+                    System.out.println("\nOpção inválida!\n");
             }
         }
     }
