@@ -31,15 +31,3 @@ public class PedidoPizza {
         }
     }
 }
-
-
-
-
-//SELECT Pizza.Valor AS valor_pizza
-//FROM PedidoPizza
-//INNER JOIN Pizza ON PedidoPizza.ID_Pizza = Pizza.ID
-//WHERE ID_Pedido = 2 and PedidoPizza.ID_Pizza IN (
-//        SELECT ID_Pizza
-//    FROM PedidoPizza
-//            WHERE Valor = (SELECT Valor FROM Pizza WHERE ID = PedidoPizza.ID_Pizza)
-//);

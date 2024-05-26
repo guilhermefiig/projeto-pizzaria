@@ -86,7 +86,7 @@ public class Conta {
             preparedStatement.executeUpdate();
 
 
-            preparedStatement = connection.prepareStatement("SELECT * from conta WHERE ID = ?;");
+            preparedStatement = connection.prepareStatement("SELECT * from conta WHERE ID = ?");
             preparedStatement.setInt(1, idConta);
             resultSet = preparedStatement.executeQuery();
 
